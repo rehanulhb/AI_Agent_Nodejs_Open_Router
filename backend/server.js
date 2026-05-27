@@ -46,3 +46,30 @@ app.post("/api/goals", async (req, res) => {
     console.error(err);
   }
 });
+
+app.post("/api/goals/:goalId/evaluate", async (req, res) => {
+  try {
+    // goal, progress, tasks, days
+    const goal = storage.getGoal(req.params.goalId);
+    if (!goal) {
+      return res.status(404).json({ error: "Goal not found!" });
+    }
+
+    const tasks = storage.getTasksByGoal(goal.id);
+    const completedCount = tasks.filter((t) => t.completed).length;
+    const createdDays = Math.ceil(
+      (Date.now() - new Date(goal.createdAt)) / (1000 * 60 * 60 * 24),
+    );
+
+    const evaluation = await evaluateProgress(
+      goal,
+      completedCount,
+      tasks.length,
+      createdDays,
+    );
+
+    res.json(evaluation);
+  } catch (err) {
+    console.error(err);
+  }
+});
