@@ -73,3 +73,9 @@ app.post("/api/goals/:goalId/evaluate", async (req, res) => {
     console.error(err);
   }
 });
+
+// ============ SERVER START ============
+
+app.listen(PORT, () => {
+  console.log(`🚀 AI Task Agent running on http://localhost:${PORT}`);
+});
