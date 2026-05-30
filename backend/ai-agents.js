@@ -8,8 +8,8 @@ const openai = new OpenAI({
 
 async function main() {
   const completion = await openai.chat.completions.create({
-    model: "stepfun/step-3.5-flash",
-    messages: [{ role: "user", content: "What is Agentic AI" }],
+    model: "stepfun/step-3.5-flash:free",
+    messages: [{ role: "user", content: "What is Agentic AI?" }],
   });
 
   console.log(completion.choices[0].message.content);
@@ -35,7 +35,7 @@ const analyzeGoal = async (goalText, durationDays) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "stepfun/step-3.5-flash",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
